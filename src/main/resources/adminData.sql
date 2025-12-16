@@ -1,0 +1,25 @@
+---- Insert Admin
+--INSERT INTO admin (
+--    name,
+--    username,
+--    password,
+--    email,
+--    phone_number,
+--    address,
+--    gender
+--) VALUES (
+--    'Main Admin',
+--    'admin',
+--    '$2a$12$Ax8/4U3xxJtuYrKyn7qOROs5SyHhTDUD1NzYbqxO4j4LywxhsXJiK',
+--    'admin@example.com',
+--    '7777777777',
+--    'Kathmandu',
+--    'MALE'
+--);
+--
+---- Insert Role linked to admin
+--INSERT INTO admin_role (role, admin_id)
+--VALUES (
+--    'ADMIN',
+--    (SELECT id FROM admin WHERE username = 'admin')
+--);
