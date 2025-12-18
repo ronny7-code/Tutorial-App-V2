@@ -4,6 +4,7 @@ import com.itn.TutorialApp.entity.Content;
 import com.itn.TutorialApp.dao.ContentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,14 +69,8 @@ public class ContentServiceImpl implements ContentService{
             Files.createDirectories(path.getParent());
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-//            String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                    .path("/files/download/")
-//                    .path(fileName)
-//                    .toUriString();
-
-
         } catch (IOException e) {
-            System.out.println("File upload failed.");
+            System.out.println("File upload failed!");
         }
 
     }
