@@ -1,5 +1,5 @@
----- Insert Admin
---INSERT INTO admin (
+-- -- Insert Admin
+-- INSERT INTO admin (
 --    name,
 --    username,
 --    password,
@@ -7,7 +7,7 @@
 --    phone_number,
 --    address,
 --    gender
---) VALUES (
+-- ) VALUES (
 --    'Main Admin',
 --    'admin',
 --    '$2a$12$Ax8/4U3xxJtuYrKyn7qOROs5SyHhTDUD1NzYbqxO4j4LywxhsXJiK',
@@ -15,11 +15,11 @@
 --    '7777777777',
 --    'Kathmandu',
 --    'MALE'
---);
+-- );
 --
----- Insert Role linked to admin
---INSERT INTO admin_role (role, admin_id)
---VALUES (
+-- -- Insert Role linked to admin
+-- INSERT INTO admin_role (role, admin_id)
+-- VALUES (
 --    'ADMIN',
 --    (SELECT id FROM admin WHERE username = 'admin')
---);
+-- );
