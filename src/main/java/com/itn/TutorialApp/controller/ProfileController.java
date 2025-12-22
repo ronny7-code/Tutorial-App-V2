@@ -40,7 +40,7 @@ public class ProfileController {
 
     // Show update form
     @GetMapping("/user/profile/update/{id}")
-    public String updateUserProfile(@PathVariable("id") Long id, Model model) {
+    public String updateUserProfile(@PathVariable Long id, Model model) {
 
         User user = userService.getUserById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

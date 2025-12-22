@@ -104,23 +104,23 @@ public class CourseController {
         enrollment.setCourse(courseService.findCourseById(id).orElse(new Course()));
         enrollment.setEnrollDate(LocalDate.now());
         enrollment.setStatus("PENDING");
-        enrollment.setPayAmount("1000");
+        enrollment.setPayAmount(String.valueOf(enrollment.getCourse().getPrice()));
         enrollment.setPaymentMode("ESEWA");
         enrollment.setEnrollEnds(LocalDate.now().plusYears(1));  // one year validity
 
         // PaymentModel
         EsewaPayment payment = new EsewaPayment();
-        payment.setAmount(100000L);
-        payment.setFailureURL("http://localhost:7777/user/enroll_payment/esewa?failure=true");
+        payment.setAmount(enrollment.getCourse().getPrice());
+        payment.setFailureURL("http://localhost:7777/user/enroll_payment/esewa?success=false");
         payment.setSuccessURL("http://localhost:7777/user/enroll_payment/esewa?success=true");
         payment.setProductCode("EPAYTEST");
         payment.setSignedFieldNames("total_amount,transaction_uuid,product_code");
         payment.setTransactionUUID(UUID.randomUUID()+"_E_LEARNING");
-        payment.setTaxAmount((100000L * 13)/100);
-        payment.setProductServiceCharge(0L);
-        payment.setProductDeliveryCharge(0L);
-        payment.setTotalAmount(100000L+ (100000L * 13)/100);
-        String message="total_amount="+payment.getTotalAmount()/100
+        payment.setTaxAmount((payment.getAmount() * 13)/100);
+        payment.setProductServiceCharge(0);
+        payment.setProductDeliveryCharge(0);
+        payment.setTotalAmount(payment.getAmount()+ (payment.getAmount() * 13)/100);
+        String message="total_amount="+payment.getTotalAmount()
                         +",transaction_uuid="+payment.getTransactionUUID()
                         +",product_code="+ payment.getProductCode();
         System.out.println("Message:"+message);

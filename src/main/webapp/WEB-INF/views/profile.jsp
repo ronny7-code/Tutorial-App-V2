@@ -125,7 +125,7 @@
         <!-- Left Profile Card -->
         <div class="col-lg-4 mb-4">
             <div class="profile-card">
-                <img src="${pageContext.request.contextPath}/Frontend/img/team-2.jpg" alt="Profile Picture" class="profile-img">
+                <img src="${pageContext.request.contextPath}/UserProfilePictures/${user.profilePicture}" alt="Profile Picture" class="profile-img">
                 <h4 class="text-primary mb-1">${user.firstName} ${user.lastName}</h4>
                 <p class="text-muted mb-2">${user.username}</p>
                 <a href="${pageContext.request.contextPath}/user/profile/update/${user.id}" class="btn btn-primary btn-sm px-4 mb-2">Edit Profile</a>

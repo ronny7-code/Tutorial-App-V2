@@ -3,6 +3,7 @@ package com.itn.TutorialApp.service;
 import com.itn.TutorialApp.dao.UserRepository;
 import com.itn.TutorialApp.entity.User;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -51,6 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setAddress(updatedUser.getAddress());
         user.setGender(updatedUser.getGender());
         user.setDOB(updatedUser.getDOB());
+        user.setProfilePicture(updatedUser.getProfilePicture());
 
         userRepository.save(user);
     }

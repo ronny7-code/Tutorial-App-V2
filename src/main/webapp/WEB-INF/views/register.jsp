@@ -68,7 +68,7 @@
             <div class="col-lg-6 py-5">
                 <div class="bg-white p-5 my-5">
                     <h1 class="text-center mb-4">New User Detail</h1>
-                    <form action="${pageContext.request.contextPath}/signup" method="POST">
+                    <form action="${pageContext.request.contextPath}/signup" method="POST" enctype="multipart/form-data">
                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                       <div class="form-row">
                           <div class="col-sm-6">
@@ -141,10 +141,16 @@
                                      </select>
                                  </div>
                             </div>
-                                 <div class="col-sm-6">
-                                     <button class="btn btn-primary btn-block" type="submit" style="height: 60px;">Sign Up Now</button>
-                                 </div>
+                            <div class="col-sm-6">
+                                <label>Upload Image</label>
+                                <input type="file" name="profileImage" accept="image/*" class="form-control">
                             </div>
+                            </div>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-block" type="submit" style="height: 60px;">Sign Up Now</button>
+                            </div>
+                        </div>
                             </form>
                         </div>
                     </div>

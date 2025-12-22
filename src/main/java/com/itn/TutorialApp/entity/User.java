@@ -3,6 +3,7 @@ package com.itn.TutorialApp.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -29,6 +30,9 @@ public class User {
     private String active;
     @Transient
     private String authority;
+    @Transient
+    private MultipartFile profileImage;
+    private String profilePicture;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserRole userRole;

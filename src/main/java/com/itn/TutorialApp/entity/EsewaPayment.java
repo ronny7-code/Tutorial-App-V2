@@ -22,14 +22,14 @@ public class EsewaPayment implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="transaction_id")
     private Long id;
-    private Long amount;
-    private Long taxAmount;
-    private Long totalAmount;
+    private double amount;
+    private double taxAmount;
+    private double totalAmount;
     @Column(name="transaction_uuid", unique=true)
     private String transactionUUID;
     private String productCode;
-    private Long productServiceCharge;
-    private Long productDeliveryCharge;
+    private double productServiceCharge;
+    private double productDeliveryCharge;
     private String successURL;
     private String failureURL;
     private String signedFieldNames;

@@ -14,6 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Controller
 public class HomeController {
@@ -55,7 +62,7 @@ public class HomeController {
 
 	// User signup
 	@PostMapping("/signup")
-	public String signup(@ModelAttribute User user) {
+	public String signup(@ModelAttribute User user) throws IOException {
 
 		// Safe password comparison to prevent NullPointerException
 		if (!java.util.Objects.equals(user.getPassword(), user.getCPassword())) {
@@ -70,6 +77,13 @@ public class HomeController {
 		userRole.setRole("USER");
 		userRole.setUser(user);
 		user.setUserRole(userRole);
+
+		// Setting the profile picture name in the DB
+		user.setProfilePicture(user.getProfileImage().getOriginalFilename());
+
+		Path path =Path.of( "C:\\Users\\STUDENT\\Documents\\GIt Stuffs\\Tutorial-App-V2\\src\\main\\resources\\static\\UserProfilePictures\\" + user.getProfileImage().getOriginalFilename());
+
+		Files.copy(user.getProfileImage().getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);
 
 		// Encode password before saving
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
