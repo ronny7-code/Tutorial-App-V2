@@ -28,6 +28,7 @@ public class User {
     @Transient
     private String cPassword;
     private String active;
+    private String email;
     @Transient
     private String authority;
     @Transient

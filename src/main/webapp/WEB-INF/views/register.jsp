@@ -142,8 +142,8 @@
                                  </div>
                             </div>
                             <div class="col-sm-6">
-                                <label>Upload Image</label>
-                                <input type="file" name="profileImage" accept="image/*" class="form-control">
+                                <label>Upload Image (Optional)</label>
+                                <input type="file" name="profileImage" accept="image/*" class="form-control" >
                             </div>
                             </div>
                         <div class="form-row">

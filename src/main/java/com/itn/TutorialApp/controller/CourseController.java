@@ -3,6 +3,7 @@ package com.itn.TutorialApp.controller;
 import com.itn.TutorialApp.entity.*;
 import com.itn.TutorialApp.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class CourseController {
 
     @Autowired
     private PaymentSecurityService paymentSecurityService;
+
+    @Autowired
+    private eLearningEmailService eLearningEmailService;
 
     @GetMapping({"/admin/course/add", "/admin/course/show"})
     public String getCourseForm(Model model){
@@ -134,6 +138,18 @@ public class CourseController {
 
         model.addAttribute("payment", payment);
         return "esewa_payment";
+    }
+
+    @GetMapping("/user/enroll_payment/esewa")
+    public String getPaymentPage(@RequestParam boolean success, Principal principal){
+        if(success){
+            String to =  userService.findByUsername(principal.getName()).getUsername();
+            String subject = "Course Registration success";
+            String message = "You've been registered in the course successfully!";
+            boolean sent = eLearningEmailService.sendMail(to, subject, message);
+        }
+
+        return "";
     }
 
 

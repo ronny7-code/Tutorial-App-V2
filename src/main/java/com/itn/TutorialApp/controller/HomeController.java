@@ -7,7 +7,9 @@ import com.itn.TutorialApp.service.InstructorService;
 import com.itn.TutorialApp.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,6 +63,7 @@ public class HomeController {
 	}
 
 	// User signup
+	// User signup
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute User user) throws IOException {
 
@@ -78,12 +81,22 @@ public class HomeController {
 		userRole.setUser(user);
 		user.setUserRole(userRole);
 
-		// Setting the profile picture name in the DB
+		// Get upload directory
+		Path uploadDir = Path.of(new ClassPathResource("static/UserProfilePictures").getFile().getAbsolutePath());
+
+		// Use resolve to append the filename safely
+		Path filePath;
+		if(user.getProfileImage().getOriginalFilename() != null) {
+			filePath = uploadDir.resolve(user.getProfileImage().getOriginalFilename());
+		}
+		else{
+			filePath = uploadDir.resolve("/static/UserProfilePictures/defaultPic");
+		}
+		// Save the file
+		Files.copy(user.getProfileImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+		// Save filename in DB
 		user.setProfilePicture(user.getProfileImage().getOriginalFilename());
-
-		Path path =Path.of( "C:\\Users\\STUDENT\\Documents\\GIt Stuffs\\Tutorial-App-V2\\src\\main\\resources\\static\\UserProfilePictures\\" + user.getProfileImage().getOriginalFilename());
-
-		Files.copy(user.getProfileImage().getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);
 
 		// Encode password before saving
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
