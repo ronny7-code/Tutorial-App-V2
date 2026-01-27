@@ -26,69 +26,88 @@
   <!-- Customized Bootstrap Stylesheet -->
   <link href="${pageContext.request.contextPath}/Frontend/css/style.css" rel="stylesheet">
 
-  <style>
+<style>
     body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f3f4f7;
+        font-family: 'Inter', -apple-system, sans-serif;
     }
-    .header-banner {
-        background-color: #007bff;
-        color: #fff;
-        padding: 80px 0 40px 0;
+
+    /* Minimalist Profile Card */
+    .profile-card-v2 {
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 12px;
         text-align: center;
-        border-radius: 0 0 20px 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.02);
     }
-    .header-banner h1 {
-        font-size: 2rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-    .header-banner p {
-        font-size: 1.1rem;
-    }
-    .profile-card {
-        background: #fff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        text-align: center;
-        transition: transform 0.3s ease;
-    }
-    .profile-card:hover {
-        transform: translateY(-5px);
-    }
-    .profile-img {
-        width: 120px;
-        height: 120px;
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        border: 4px solid #007bff;
-        margin-bottom: 15px;
-    }
-    .info-panel {
+        padding: 4px;
         background: #fff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 2px solid #0d6efd;
     }
-    .info-panel .row {
-        margin-bottom: 10px;
+
+    /* Elegant Info Panel */
+    .info-panel-v2 {
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.02);
     }
-    .info-panel .font-weight-bold {
-        color: #007bff;
+
+    .icon-box {
+        width: 40px;
+        height: 40px;
+        background: rgba(13, 110, 253, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
     }
-    @media (max-width: 991px) {
-        .header-banner {
-            padding: 60px 0 30px 0;
-        }
-        .header-banner h1 {
-            font-size: 1.6rem;
-        }
-        .header-banner p {
-            font-size: 1rem;
-        }
+
+    /* Typography & Spacing */
+    .info-item {
+        margin-bottom: 1.25rem;
+        border-bottom: 1px solid #f8f9fa;
+        padding-bottom: 0.5rem;
     }
-  </style>
+
+    .info-item label {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    .info-item p {
+        margin: 0;
+        color: #212529;
+        font-weight: 500;
+    }
+
+    .btn-sm {
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        font-size: 0.85rem;
+    }
+
+    /* Clean hover effect */
+    .profile-card-v2, .info-panel-v2 {
+        transition: all 0.3s ease;
+    }
+
+    .profile-card-v2:hover {
+        border-color: #0d6efd44;
+    }
+</style>
+
 </head>
 
 <body>
@@ -115,64 +134,76 @@
 
 <!-- Main Profile Section -->
 <div class="container py-5">
-    <div class="row">
+    <div class="row justify-content-center g-4">
         <!-- Left Profile Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="profile-card">
-                <img src="${pageContext.request.contextPath}/UserProfilePictures/${user.profilePicture}" alt="Profile Picture" class="profile-img">
-                <h4 class="text-primary mb-1">${user.firstName} ${user.lastName}</h4>
-                <p class="text-muted mb-2">${user.username}</p>
-                <a href="${pageContext.request.contextPath}/user/profile/update/${user.id}" class="btn btn-primary btn-sm px-4 mb-2">Edit Profile</a>
-                <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger btn-sm px-4">Logout</a>
+        <div class="col-lg-3">
+            <div class="profile-card-v2 p-4">
+                <div class="position-relative d-inline-block mb-3">
+                    <img src="${pageContext.request.contextPath}/UserProfilePictures/${user.profilePicture}"
+                         alt="Profile" class="profile-avatar shadow-sm">
+                </div>
+                <h5 class="fw-bold text-dark mb-1">${user.firstName} ${user.lastName}</h5>
+                <p class="text-muted small mb-4">@${user.username}</p>
+
+                <div class="d-grid gap-2">
+                    <a href="${pageContext.request.contextPath}/user/profile/update/${user.id}"
+                       class="btn btn-primary btn-sm rounded-pill">Edit Profile</a>
+                    <a href="${pageContext.request.contextPath}/logout"
+                       class="btn btn-outline-danger btn-sm rounded-pill">Logout</a>
+                </div>
             </div>
         </div>
 
         <!-- Right Info Panel -->
-        <div class="col-lg-8">
-            <div class="info-panel">
-                <h4 class="text-primary mb-4">Profile Information</h4>
-
-                <div class="row">
-                    <div class="col-sm-4 font-weight-bold">Full Name:</div>
-                    <div class="col-sm-8">${user.firstName} ${user.lastName}</div>
+        <div class="col-lg-6">
+            <div class="info-panel-v2 p-4 h-100">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="icon-box me-3">
+                        <i class="bi bi-person-badge text-primary"></i>
+                    </div>
+                    <h5 class="mb-0 fw-bold text-dark">Account Details</h5>
                 </div>
 
-                <div class="row">
-                    <div class="col-sm-4 font-weight-bold">Username:</div>
-                    <div class="col-sm-8">${user.username}</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Full Name</label>
+                        <p>${user.firstName} ${user.lastName}</p>
+                    </div>
+
+                    <c:if test="${not empty user.phoneNumber}">
+                        <div class="info-item">
+                            <label>Phone Number</label>
+                            <p>${user.phoneNumber}</p>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${not empty user.address}">
+                        <div class="info-item">
+                            <label>Address</label>
+                            <p>${user.address}</p>
+                        </div>
+                    </c:if>
+
+                    <div class="row">
+                        <c:if test="${not empty user.gender}">
+                            <div class="col-sm-6 info-item">
+                                <label>Gender</label>
+                                <p>${user.gender}</p>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty user.DOB}">
+                            <div class="col-sm-6 info-item">
+                                <label>Date of Birth</label>
+                                <p>${user.DOB}</p>
+                            </div>
+                        </c:if>
+                    </div>
                 </div>
-
-                <c:if test="${not empty user.phoneNumber}">
-                    <div class="row">
-                        <div class="col-sm-4 font-weight-bold">Phone:</div>
-                        <div class="col-sm-8">${user.phoneNumber}</div>
-                    </div>
-                </c:if>
-
-                <c:if test="${not empty user.address}">
-                    <div class="row">
-                        <div class="col-sm-4 font-weight-bold">Address:</div>
-                        <div class="col-sm-8">${user.address}</div>
-                    </div>
-                </c:if>
-
-                <c:if test="${not empty user.gender}">
-                    <div class="row">
-                        <div class="col-sm-4 font-weight-bold">Gender:</div>
-                        <div class="col-sm-8">${user.gender}</div>
-                    </div>
-                </c:if>
-
-                <c:if test="${not empty user.DOB}">
-                    <div class="row">
-                        <div class="col-sm-4 font-weight-bold">Date of Birth:</div>
-                        <div class="col-sm-8">${user.DOB}</div>
-                    </div>
-                </c:if>
             </div>
         </div>
     </div>
 </div>
+
 
     <!-- Courses Section -->
     <div id="courses-section" class="container-fluid px-0 py-5">

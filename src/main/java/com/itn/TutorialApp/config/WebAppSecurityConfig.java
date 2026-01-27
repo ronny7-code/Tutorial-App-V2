@@ -24,8 +24,14 @@ public class WebAppSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        // 1. ALLOW PUBLIC ACCESS TO IMAGES AND STATIC ASSETS
+                        .requestMatchers("/UserProfilePictures/**", "/Frontend/**", "/css/**", "/js/**").permitAll()
+
+                        // 2. PROTECT SPECIFIC ROUTES
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
+
+                        // 3. PERMIT OTHER PUBLIC PAGES (login, signup, etc.)
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login

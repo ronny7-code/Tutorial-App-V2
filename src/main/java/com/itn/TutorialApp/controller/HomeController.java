@@ -63,48 +63,45 @@ public class HomeController {
 	}
 
 	// User signup
-	// User signup
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute User user) throws IOException {
 
-		// Safe password comparison to prevent NullPointerException
+		// 1. Validate Password
 		if (!java.util.Objects.equals(user.getPassword(), user.getCPassword())) {
 			throw new IllegalArgumentException("Password is not matching");
 		}
 
-		// Enable the user
-		user.setActive("1"); // 1 = enabled, 0 = disabled
-
-		// Assign default role
+		// 2. Set Default User Properties
+		user.setActive("1"); // Enable user
 		UserRole userRole = new UserRole();
 		userRole.setRole("USER");
 		userRole.setUser(user);
 		user.setUserRole(userRole);
 
-		// Get upload directory
+		// 3. Handle File Upload
 		Path uploadDir = Path.of(new ClassPathResource("static/UserProfilePictures").getFile().getAbsolutePath());
+		MultipartFile file = user.getProfileImage();
 
-		// Use resolve to append the filename safely
-		Path filePath;
-		if(user.getProfileImage().getOriginalFilename() != null) {
-			filePath = uploadDir.resolve(user.getProfileImage().getOriginalFilename());
+		// Ensure fileName is never empty to avoid DirectoryNotEmptyException
+		String fileName = (file != null && !file.isEmpty())
+				? file.getOriginalFilename()
+				: "defaultPic.jpg";
+
+		Path filePath = uploadDir.resolve(fileName);
+
+		if (Files.isDirectory(filePath)) {
+			throw new IOException("Target path is a directory, not a file: " + filePath);
 		}
-		else{
-			filePath = uploadDir.resolve("/static/UserProfilePictures/defaultPic");
-		}
-		// Save the file
-		Files.copy(user.getProfileImage().getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-		// Save filename in DB
-		user.setProfilePicture(user.getProfileImage().getOriginalFilename());
+		Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-		// Encode password before saving
+		// 4. Update User Object with File Name and Encoded Password
+		user.setProfilePicture(fileName);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		// Save user
+		// 5. SAVE TO DATABASE
 		userService.addUser(user);
 
-		// Redirect to login page with success
 		return "redirect:/login?success";
 	}
 
